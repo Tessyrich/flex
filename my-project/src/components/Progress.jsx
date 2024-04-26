@@ -17,7 +17,7 @@ const ProgressBar = () => {
   };
 
   return (
-    <div className="w-full max-w-xs mx-auto ">
+    <div className="w-full max-w-xs sm:max-w-[20rem] ">
       <div className="flex items-center gap-2 mb-4  border rounded-3xl w-full">
         <button
           className="px-4 py-2  text-gray-500  rounded-full  border border-gray-100"

@@ -23,7 +23,7 @@ export default function NavLink() {
         <Input
           radius="full"
           classNames={{
-            base: "max-w-full sm:max-w-[20rem] h-10 w-[30rem] ",
+            base: "max-w-full sm:max-w-[20rem] h-10 lg:w-[30rem] ",
             mainWrapper: "h-full",
             input: "text-small",
 

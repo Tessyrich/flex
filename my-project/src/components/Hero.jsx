@@ -1,11 +1,13 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Divider,
-  Link,
   Image,
   Button,
   Avatar,
@@ -18,336 +20,138 @@ import { PlusIcon } from "./icon/PlusIcon";
 import TrendingCard from "./TrendingCard";
 
 const Hero = () => {
-  const containerRef = useRef(null);
+  const sliderRef = useRef(null);
 
-  const scrollLeft = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft -= 200; // Adjust scroll speed as needed
-    }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (sliderRef.current) {
+        sliderRef.current.slickNext(); // Move to the next slide
+      }
+    }, 5000); // Change the interval as needed
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
+  const sliderSettings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 2, // Adjust the number of slides shown
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
-  const scrollRight = () => {
-    if (containerRef.current) {
-      containerRef.current.scrollLeft += 200; // Adjust scroll speed as needed
-    }
-  };
   return (
-    <div className="py-6 px-14 w-full h-auto overflow-x">
-      <div className="flex justify-between ">
+    <div className="py-6 px-6 w-full h-auto">
+      <div className="flex justify-between">
         <p className="text-xl font-bold">Featured Models</p>
         <div className="flex gap-2">
-          <div onClick={scrollLeft}>
-            <Leftarrow />{" "}
+          <div onClick={() => sliderRef.current.slickPrev()}>
+            <Leftarrow />
           </div>
-          <div onClick={scrollRight}>
-            {" "}
-            <Rightarrow />{" "}
+          <div onClick={() => sliderRef.current.slickNext()}>
+            <Rightarrow />
           </div>
         </div>
       </div>
-      <div
-        ref={containerRef}
-        className="flex overflow-x-hidden space-x-4 flex-nowrap  w-full lg:max-w-[75vw]"
-        style={{ maxWidth: "" }}
+      <Slider
+        ref={sliderRef}
+        {...sliderSettings}
+        className=" flex-nowrap  w-full  flex lg:max-w-[77vw] "
       >
-        <div className="flex py-6   ">
-          <Card
-            isFooterBlurred
-            radius="lg"
-            className="border-none rounded-r-none  w-[18rem] h-full "
-          >
-            <Image
-              alt="head set"
-              className="object-cover  w-full h-[20rem] xl:h-[22rem] "
-              src={HeadsetImg}
-            />
-            <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <div className="flex gap-2 w-full">
-                {" "}
-                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                <Checkbox defaultSelected className=""></Checkbox>
-              </div>
-
-              <Button
-                isIconOnly
-                aria-label="Like "
-                radius="full"
-                className="text-tiny text-white bg-black/20"
+        {[...Array(4)].map((_, index) => (
+          <div key={index} className=" carousel-item w-full lg:max-w-[40vw]">
+            <div className="flex lg:flex-row flex-col w-full  lg:h-[15rem] xl:h-[22rem]">
+              {" "}
+              {/* Add this div */}
+              <Card
+                isFooterBlurred
+                radius="lg"
+                className="border-none rounded-r-none w-full  lg:w-[18rem] h-full"
               >
-                <PlusIcon />
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className=" rounded-l-none w-[25rem] xl:w-[30rem] px-6 py-2">
-            <CardHeader className="flex flex-col gap-3 w-full">
-              <h1 className="text-xs lg:text-xl font-bold xl:text-2xl w-full ">
-                Ilustration Gaming Head set
-              </h1>
-              <h3 className="xl:text-xl">
-                A detailed illustration gaming head set and mouse, magic,
-                sticker design.
-              </h3>
-            </CardHeader>
-            <Divider />
-            <CardBody className="xl:text-xl lg:text-xs w-full">
-              <div className=" flex justify-between w-full">
-                <div className="flex flex-col w-full">
-                  <p className=" w-full ">Trainig Resolution</p>
-                  <p className="font-bold ">1024x1024</p>
-                </div>
-                <div className="flex flex-col w-full ">
-                  {" "}
-                  <p className=" ">Base Model</p>
-                  <p className="font-bold  w-full ">Stable Difusion v2.1</p>
-                </div>
-              </div>
-              <div className=" flex ">
-                <div className="flex flex-col mr-32">
-                  <p className="">Category</p>
-                  <p className="font-bold">General</p>
-                </div>
-                <div className="flex flex-col">
-                  {" "}
-                  <p>Strength</p>
-                  <p className="font-bold">Medium</p>
-                </div>
-              </div>
-            </CardBody>
-
-            <CardFooter>
-              <Button
-                radius="full"
-                className="bg-gradient-to-tr from-[#A966DE] to-[#4C6EFF] text-white text-lg lg:text-xl shadow-lg flex w-3/4 "
-              >
-                Generate with this model
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-
-        <div className="flex py-6   ">
-          <Card
-            isFooterBlurred
-            radius="lg"
-            className="border-none rounded-r-none  w-[18rem] h-full "
-          >
-            <Image
-              alt="head set"
-              className="object-cover  w-full h-[20rem] xl:h-[22rem] "
-              src={HeadsetImg}
-            />
-            <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <div className="flex gap-2 w-full">
-                {" "}
-                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                <Checkbox defaultSelected className=""></Checkbox>
-              </div>
-
-              <Button
-                isIconOnly
-                aria-label="Like "
-                radius="full"
-                className="text-tiny text-white bg-black/20"
-              >
-                <PlusIcon />
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className=" rounded-l-none w-[25rem] xl:w-[30rem] px-6 py-2">
-            <CardHeader className="flex flex-col gap-3 w-full">
-              <h1 className="text-xs lg:text-xl font-bold xl:text-2xl w-full ">
-                Ilustration Gaming Head set
-              </h1>
-              <h3 className="xl:text-xl">
-                A detailed illustration gaming head set and mouse, magic,
-                sticker design.
-              </h3>
-            </CardHeader>
-            <Divider />
-            <CardBody className="xl:text-xl lg:text-xs w-full">
-              <div className=" flex justify-between w-full">
-                <div className="flex flex-col w-full">
-                  <p className=" w-full ">Trainig Resolution</p>
-                  <p className="font-bold ">1024x1024</p>
-                </div>
-                <div className="flex flex-col w-full ">
-                  {" "}
-                  <p className=" ">Base Model</p>
-                  <p className="font-bold  w-full ">Stable Difusion v2.1</p>
-                </div>
-              </div>
-              <div className=" flex ">
-                <div className="flex flex-col mr-32">
-                  <p className="">Category</p>
-                  <p className="font-bold">General</p>
-                </div>
-                <div className="flex flex-col">
-                  {" "}
-                  <p>Strength</p>
-                  <p className="font-bold">Medium</p>
-                </div>
-              </div>
-            </CardBody>
-
-            <CardFooter>
-              <Button
-                radius="full"
-                className="bg-gradient-to-tr from-[#A966DE] to-[#4C6EFF] text-white text-lg lg:text-xl shadow-lg flex w-3/4 "
-              >
-                Generate with this model
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-        <div className="flex py-6   ">
-          <Card
-            isFooterBlurred
-            radius="lg"
-            className="border-none rounded-r-none  w-[18rem] h-full "
-          >
-            <Image
-              alt="head set"
-              className="object-cover  w-full h-[20rem] xl:h-[22rem] "
-              src={HeadsetImg}
-            />
-            <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <div className="flex gap-2 w-full">
-                {" "}
-                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                <Checkbox defaultSelected className=""></Checkbox>
-              </div>
-
-              <Button
-                isIconOnly
-                aria-label="Like "
-                radius="full"
-                className="text-tiny text-white bg-black/20"
-              >
-                <PlusIcon />
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className=" rounded-l-none w-[25rem] xl:w-[30rem] px-6 py-2">
-            <CardHeader className="flex flex-col gap-3 w-full">
-              <h1 className="text-xs lg:text-xl font-bold xl:text-2xl w-full ">
-                Ilustration Gaming Head set
-              </h1>
-              <h3 className="xl:text-xl">
-                A detailed illustration gaming head set and mouse, magic,
-                sticker design.
-              </h3>
-            </CardHeader>
-            <Divider />
-            <CardBody className="xl:text-xl lg:text-xs w-full">
-              <div className=" flex justify-between w-full">
-                <div className="flex flex-col w-full">
-                  <p className=" w-full ">Trainig Resolution</p>
-                  <p className="font-bold ">1024x1024</p>
-                </div>
-                <div className="flex flex-col w-full ">
-                  {" "}
-                  <p className=" ">Base Model</p>
-                  <p className="font-bold  w-full ">Stable Difusion v2.1</p>
-                </div>
-              </div>
-              <div className=" flex ">
-                <div className="flex flex-col mr-32">
-                  <p className="">Category</p>
-                  <p className="font-bold">General</p>
-                </div>
-                <div className="flex flex-col">
-                  {" "}
-                  <p>Strength</p>
-                  <p className="font-bold">Medium</p>
-                </div>
-              </div>
-            </CardBody>
-
-            <CardFooter>
-              <Button
-                radius="full"
-                className="bg-gradient-to-tr from-[#A966DE] to-[#4C6EFF] text-white text-lg lg:text-xl shadow-lg flex w-3/4 "
-              >
-                Generate with this model
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-        <div className="flex py-6   ">
-          <Card
-            isFooterBlurred
-            radius="lg"
-            className="border-none rounded-r-none  w-[18rem] h-full "
-          >
-            <Image
-              alt="head set"
-              className="object-cover  w-full h-[20rem] xl:h-[22rem] "
-              src={HeadsetImg}
-            />
-            <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100%_-_8px)] shadow-small ml-1 z-10">
-              <div className="flex gap-2 w-full">
-                {" "}
-                <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
-                <Checkbox defaultSelected className=""></Checkbox>
-              </div>
-
-              <Button
-                isIconOnly
-                aria-label="Like "
-                radius="full"
-                className="text-tiny text-white bg-black/20"
-              >
-                <PlusIcon />
-              </Button>
-            </CardFooter>
-          </Card>
-          <Card className=" rounded-l-none w-[25rem] xl:w-[30rem] px-6 py-2">
-            <CardHeader className="flex flex-col gap-3 w-full">
-              <h1 className="text-xs lg:text-xl font-bold xl:text-2xl w-full ">
-                Ilustration Gaming Head set
-              </h1>
-              <h3 className="xl:text-xl">
-                A detailed illustration gaming head set and mouse, magic,
-                sticker design.
-              </h3>
-            </CardHeader>
-            <Divider />
-            <CardBody className="xl:text-xl lg:text-xs w-full">
-              <div className=" flex justify-between w-full">
-                <div className="flex flex-col w-full">
-                  <p className=" w-full ">Trainig Resolution</p>
-                  <p className="font-bold ">1024x1024</p>
-                </div>
-                <div className="flex flex-col w-full ">
-                  {" "}
-                  <p className=" ">Base Model</p>
-                  <p className="font-bold  w-full ">Stable Difusion v2.1</p>
-                </div>
-              </div>
-              <div className=" flex ">
-                <div className="flex flex-col mr-32">
-                  <p className="">Category</p>
-                  <p className="font-bold">General</p>
-                </div>
-                <div className="flex flex-col">
-                  {" "}
-                  <p>Strength</p>
-                  <p className="font-bold">Medium</p>
-                </div>
-              </div>
-            </CardBody>
-
-            <CardFooter>
-              <Button
-                radius="full"
-                className="bg-gradient-to-tr from-[#A966DE] to-[#4C6EFF] text-white text-lg lg:text-xl shadow-lg flex w-3/4 "
-              >
-                Generate with this model
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      </div>
+                <img
+                  alt="head set"
+                  className="object-cover w-full h-auto lg:h-[15rem] xl:h-[22rem]"
+                  src={HeadsetImg}
+                />
+                <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100% - 8px)] shadow-small ml-1 z-10">
+                  <div className="flex gap-2 w-full">
+                    <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                    <Checkbox defaultSelected className="" />
+                  </div>
+                  <Button
+                    isIconOnly
+                    aria-label="Like "
+                    radius="full"
+                    className="text-tiny text-white bg-black/20"
+                  >
+                    <PlusIcon />
+                  </Button>
+                </CardFooter>
+              </Card>
+              <Card className="rounded-l-none w-full xl:w-[30rem] lg:px-6 px-2 py-2 overflow-y-hidden">
+                <CardHeader className="flex flex-col gap-3 w-full justify-center items-start">
+                  <h1 className="text-xs lg:text-xl font-bold xl:text-2xl w-full">
+                    Ilustration Gaming Head set
+                  </h1>
+                  <h3 className="xl:text-xl w-full lg:w-full ">
+                    A detailed illustration gaming head set and mouse, magic,
+                    sticker design.
+                  </h3>
+                </CardHeader>
+                <Divider />
+                <CardBody className="xl:text-xl text-xs w-full  flex flex-col lg:gap-5 xl:gap-1">
+                  <div className="flex justify-between w-full  ">
+                    <div className="flex flex-col w-full ">
+                      <p className="w-full ">Trainig Resolution</p>
+                      <p className="font-bold lg:hidden xl:block">1024x1024</p>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <p className="w-full text-end">Base Model</p>
+                      <p className="font-bold w-full lg:hidden xl:block text-end">
+                        Stable Difusion
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex ">
+                    <div className="flex flex-col w-full ">
+                      <p className="">Category</p>
+                      <p className="font-bold ">General</p>
+                    </div>
+                    <div className="flex flex-col w-full text-end">
+                      <p>Strength</p>
+                      <p className="font-bold">Medium</p>
+                    </div>
+                  </div>
+                </CardBody>
+                <CardFooter>
+                  <Button
+                    radius="full"
+                    className="bg-gradient-to-tr from-[#A966DE] to-[#4C6EFF] text-white text-lg lg:text-xl shadow-lg flex lg:w-3/4 w-full"
+                  >
+                    Generate with this model
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          </div>
+        ))}
+      </Slider>
       <TrendingCard />
     </div>
   );

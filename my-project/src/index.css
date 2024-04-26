@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* .carousel-container {
+  display: flex;
+  overflow: hidden;
+  animation: carousel-animation 20s linear infinite; 
+}
+.carousel-item {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@keyframes carousel-animation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+} */
+
+.carousel-container {
+  display: flex;
+  overflow-x: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+}
+
+/* Define transition for smooth animation */
+.card-content,
+.card-details {
+  transition: transform 0.3s ease;
+}
+
+/* Shift the card content to the left when details are shown */
+.details-shown .card-content {
+  transform: translateX(-100%);
+}
+
+/* Shift the card details to the right when shown */
+.details-shown .card-details {
+  transform: translateX(0);
+}

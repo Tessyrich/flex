@@ -4,6 +4,7 @@ import "./App.css";
 import Mainlayout from "./layout/mainlayout";
 import Hero from "./components/Hero";
 import Sidenav from "./components/sidenav";
+import Testing from "./components/Testing";
 import { NextUIProvider } from "@nextui-org/react";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Hero />
           </div>
         </div>
+        <Testing />
       </NextUIProvider>
     </>
   );
