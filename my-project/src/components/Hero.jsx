@@ -89,7 +89,7 @@ const Hero = () => {
                   className="object-cover w-full h-auto lg:h-[15rem] xl:h-[22rem]"
                   src={HeadsetImg}
                 />
-                <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[calc(100% - 8px)] shadow-small ml-1 z-10">
+                <CardFooter className="flex justify-between overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 w-[95%] shadow-small ml-1 z-10">
                   <div className="flex gap-2 w-full">
                     <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
                     <Checkbox defaultSelected className="" />

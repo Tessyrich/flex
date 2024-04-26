@@ -5,8 +5,8 @@ import { Button } from "@nextui-org/react";
 
 const Sidenav = () => {
   return (
-    <div className=" bg-black">
-      <div className="flex flex-col px-6 pt-4 w-full gap-8">
+    <div className="w-2/4 bg-black">
+      <div className="flex flex-col lg:px-6 px-2 pt-4 w-full gap-8">
         <Button
           variant="ghost"
           startContent={<RegeneLogo />}

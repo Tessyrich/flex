@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <NextUIProvider>
-        <div className="flex">
+        <div className="flex w-full">
           <Sidenav />
           <div className="w-full flex flex-col">
             {" "}
@@ -21,7 +21,6 @@ function App() {
             <Hero />
           </div>
         </div>
-        <Testing />
       </NextUIProvider>
     </>
   );
